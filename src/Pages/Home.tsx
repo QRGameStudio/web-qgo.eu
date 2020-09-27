@@ -1,12 +1,35 @@
 import React, { useState } from "react";
-import QrReader from "react-qr-reader";
+import { Button } from "@material-ui/core";
+import T from "../Utils/translate/translator";
+import Scanner from "../Components/Scanner";
+import { useHistory } from "react-router-dom";
+
+const validateScan = (data: string) => true;
 
 export default function () {
-  const [result, setResult] = useState<string | null>(null);
+  const [scann, setScann] = useState(false);
+  const history = useHistory();
+
+  const onScan = (data: string) => {
+    if (validateScan(data)) {
+      history.push("/Game/" + data);
+    } else {
+      alert("Scann invalid TODO");
+      setScann(false);
+    }
+  };
+
   return (
-    <div>
-      <QrReader delay={300} onError={console.error} onScan={setResult} style={{ width: "100%" }} />
-      <p>{result || ""}</p>
-    </div>
+    <>
+      {scann ? (
+        <Scanner onScanCompleate={onScan} />
+      ) : (
+        <div style={{ width: "80vw", marginLeft: "10vw", marginTop: "40vh" }}>
+          <Button variant="contained" fullWidth color="primary" onClick={() => setScann(true)}>
+            {T.ScanAndPlay}
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
