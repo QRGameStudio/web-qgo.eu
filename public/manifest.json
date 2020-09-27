@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "QRGames",
+  "name": "QR Games Player",
   "icons": [
     {
       "src": "favicon.ico",
