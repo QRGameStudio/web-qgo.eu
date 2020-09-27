@@ -1,4 +1,7 @@
-import LZMA from "../lib/lzma";
+import base32 from "base32";
+import CodeMap from "./codeMap";
+
+const LZMA = require("lzma/src/lzma_worker.js").LZMA_WORKER;
 
 export default class Decompressor {
   private compressedText: string;
@@ -13,41 +16,24 @@ export default class Decompressor {
   };
 
   private base32 = () => {
-    // const compressed = Uint8Array.from(window.base32.decode(this.compressedText.toLowerCase()), (c) => c.charCodeAt(0));
-    // return this.lzma(compressed);
-    return this.compressedText; // TODO
+    // @ts-ignore
+    const compressed = Uint8Array.from(base32.decode(this.compressedText.toLowerCase()), (c) => c.charCodeAt(0));
+    return this.lzma(compressed);
   };
 
   private lzma = (compressed: Uint8Array) => {
-    const inStream = new LZMA.iStream(compressed);
-    const outStream = LZMA.decompressFile(inStream);
-    return outStream.toString();
+    return LZMA.decompress(compressed);
   };
 
   decompress = () => {
+    let res = "";
     if (this.compressedText.startsWith("CB")) {
       this.compressedText = this.compressedText.substring(2);
-      return this.base32();
+      res = this.base32();
+    } else {
+      res = this.base64();
     }
-    return this.base64();
+    console.log(res);
+    return new CodeMap(res).revert() as string;
   };
 }
-
-// window.onload = async () => {
-//   if (!window.location.hash) {
-//     console.error("No data to parse");
-//     return;
-//   }
-//   document.body.innerText = "";
-//   const hashData = window.location.hash.substring(1);
-//   if (hashData === "debug") {
-//     console.log("Awaiting your /debug/ commands");
-//     return;
-//   }
-//   const decompressor = new Decompressor(hashData);
-//   const decompressed = decompressor.decompress();
-//   const html = new CodeMap(decompressed).revert();
-//   const storage = new GStorage("currentGame", true);
-//   await storage.set("currentGame", html);
-//   location.replace("game.html");
-// };

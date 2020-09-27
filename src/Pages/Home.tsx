@@ -5,7 +5,7 @@ import Scanner from "../Components/Scanner";
 import { useHistory } from "react-router-dom";
 
 const validateScan = (data: string) => true;
-const preprocessScan = (data: string) => data.replace("http://QRPR.EU/", "");
+const preprocessScan = (data: string) => data.split("#").reverse()[0];
 
 export default function () {
   const [scann, setScann] = useState(false);
