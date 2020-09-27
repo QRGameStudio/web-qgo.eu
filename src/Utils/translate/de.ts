@@ -3,4 +3,5 @@ export const de = {
   Language: "Sprache",
   DarkMode: "Dunkler Modus",
   DeleteCache: "Cache löschen",
+  ScanAndPlay: "Scannen und spielen",
 };

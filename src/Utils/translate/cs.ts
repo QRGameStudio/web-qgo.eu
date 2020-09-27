@@ -3,4 +3,5 @@ export const cs = {
   Language: "Jazyk",
   DarkMode: "Tmavý režim",
   DeleteCache: "Vymazat mezipaměť",
+  ScanAndPlay: "Naskenuj a hraj",
 };

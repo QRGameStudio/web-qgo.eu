@@ -11,5 +11,5 @@ const langStoredCode: string = localStorage.getItem("langCode") || "en";
 // eslint-disable-next-line
 const lang: any = langs.get(langStoredCode);
 
-// export default { ...en, ...lang };
-export default { ...en };
+export default { ...en, ...lang };
+// export default { ...en };
