@@ -5,7 +5,7 @@ import { buildCode } from "../Utils/gameCodeBuilder";
 
 const frameStyle: React.CSSProperties = {
   width: "100vw",
-  height: "80vh",
+  height: `${document.documentElement.clientHeight - 64}px`,
   border: "none",
 };
 
