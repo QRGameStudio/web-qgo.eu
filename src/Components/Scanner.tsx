@@ -6,6 +6,10 @@ interface IProps {
 }
 
 export default function ({ onScanCompleate }: IProps) {
+  const height = document.documentElement.clientHeight - 64;
+  const width = document.documentElement.clientWidth;
+  const size = Math.min(height, width);
+
   return (
     <div>
       <QrReader
@@ -14,7 +18,12 @@ export default function ({ onScanCompleate }: IProps) {
         onScan={(data) => {
           if (data !== null) onScanCompleate(data);
         }}
-        style={{ width: "100%" }}
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          marginLeft: `${parseInt(((width - size) / 2).toString())}px`,
+          marginTop: `${parseInt(((height - size) / 2).toString())}px`,
+        }}
       />
     </div>
   );

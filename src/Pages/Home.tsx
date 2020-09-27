@@ -5,6 +5,7 @@ import Scanner from "../Components/Scanner";
 import { useHistory } from "react-router-dom";
 
 const validateScan = (data: string) => true;
+const preprocessScan = (data: string) => data.replace("http://QRPR.EU/", "");
 
 export default function () {
   const [scann, setScann] = useState(false);
@@ -12,7 +13,7 @@ export default function () {
 
   const onScan = (data: string) => {
     if (validateScan(data)) {
-      history.push("/Game/" + data);
+      history.push("/Game/" + encodeURI(preprocessScan(data)));
     } else {
       alert("Scann invalid TODO");
       setScann(false);
