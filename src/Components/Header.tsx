@@ -1,6 +1,6 @@
+import React from "react";
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { WifiOff, Menu } from "@material-ui/icons";
-import React from "react";
 
 interface IProps {
   offline: boolean;
@@ -11,13 +11,12 @@ export default function ({ offline, setRightDrawerOpen }: IProps) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography style={{ flexGrow: 1 }}>QR Games studio</Typography>
+        <Typography style={{ flexGrow: 1 }}>QR Games Player</Typography>
         {offline && (
           <IconButton color="inherit">
             <WifiOff />
           </IconButton>
         )}
-
         <IconButton edge="end" color="inherit" onClick={() => setRightDrawerOpen(true)}>
           <Menu />
         </IconButton>

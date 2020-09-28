@@ -4,4 +4,7 @@ export const de = {
   DarkMode: "Dunkler Modus",
   DeleteCache: "Cache löschen",
   ScanAndPlay: "Scannen und spielen",
+  Play: "Spielen",
+  Version: "Version",
+  Collection: "Meine Sammlung",
 };
