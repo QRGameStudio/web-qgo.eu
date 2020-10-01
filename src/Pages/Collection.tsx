@@ -15,9 +15,9 @@ export default function () {
     () =>
       setGames(
         collection.getAll().sort((a, b) => {
-          if (a.isFavourite && !b.isFavourite) return 1;
-          if (b.isFavourite && !a.isFavourite) return -1;
-          return a.name < b.name ? 1 : a.name === b.name ? 0 : -1;
+          if (a.isFavourite && !b.isFavourite) return -1;
+          if (b.isFavourite && !a.isFavourite) return 1;
+          return a.name < b.name ? -1 : a.name === b.name ? 0 : 1;
         })
       ),
     // eslint-disable-next-line

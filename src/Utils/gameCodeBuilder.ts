@@ -1,6 +1,6 @@
 const libs = {
-  js: ["jquery.min.js", "bootstrap.min.js", "GStorage.js", "musicComposer.js"],
-  css: ["bootstrap.min.css"],
+  js: ["jquery.min.js", "bootstrap.min.js", "GStorage.js", "musicComposer.js", "themeProvider.js"],
+  css: ["bootstrap.min.css", "themeProvider.css"],
 };
 
 export function buildCode(code: string) {

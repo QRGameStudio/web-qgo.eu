@@ -5,13 +5,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Collapse,
   ListItemSecondaryAction,
   Switch,
   Typography,
   Grid,
+  Dialog,
+  DialogTitle,
 } from "@material-ui/core";
-import { Translate, ExpandLess, ExpandMore, Brightness4, Cached, LibraryBooks, CropFree } from "@material-ui/icons";
+import { Translate, Brightness4, Cached, LibraryBooks, CropFree } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import T from "../Utils/translate/translator";
@@ -30,6 +31,9 @@ interface IProps {
 const useStyles = makeStyles({
   list: {
     width: 240,
+  },
+  languageDialog: {
+    width: "50vw",
   },
 });
 
@@ -90,15 +94,15 @@ export default function RightDrawer(props: IProps) {
       <hr style={{ width: "95%" }} />
       <br />
 
-      <ListItem button onClick={() => setNestedListOpen(!nestedListOpen)} className="py-0">
+      <ListItem button onClick={() => setNestedListOpen(true)} className="py-0">
         <ListItemIcon>
           <Translate />
         </ListItemIcon>
         <ListItemText primary={T.Language} secondary={T._Language} />
-        {nestedListOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={nestedListOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+      <Dialog maxWidth="lg" onClose={() => setNestedListOpen(false)} open={nestedListOpen}>
+        <DialogTitle>{T.Language}</DialogTitle>
+        <List className={classes.languageDialog} component="div" disablePadding>
           <ListItem
             button
             onClick={() => {
@@ -124,8 +128,7 @@ export default function RightDrawer(props: IProps) {
             <ListItemText primary="Čeština" />
           </ListItem>
         </List>
-      </Collapse>
-
+      </Dialog>
       <ListItem button onClick={() => serviceWorkerUnregistration()}>
         <ListItemIcon>
           <Cached />
