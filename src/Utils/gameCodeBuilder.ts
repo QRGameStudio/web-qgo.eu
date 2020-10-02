@@ -1,5 +1,5 @@
 const libs = {
-  js: ["jquery.min.js", "bootstrap.min.js", "GStorage.js", "musicComposer.js", "themeProvider.js"],
+  js: ["jquery.min.js", "bootstrap.min.js", "GStorage.js", "musicComposer.js", "themeProvider.js", "modals.js"],
   css: ["bootstrap.min.css", "themeProvider.css"],
 };
 
