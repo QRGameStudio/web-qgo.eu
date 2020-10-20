@@ -16,7 +16,11 @@ export default function ({ game, toggleFavourite, playGame, removeGame }: IProps
     <Card style={{ margin: "16px" }}>
       <CardHeader
         action={
-          <IconButton onClick={toggleFavourite} style={{ color: game.isFavourite ? "pink" : "inherit" }}>
+          <IconButton
+            onClick={toggleFavourite}
+            style={{ color: game.isFavourite ? "pink" : "inherit" }}
+            aria-label="makeFavourite"
+          >
             {game.isFavourite ? <Favorite /> : <FavoriteBorder />}
           </IconButton>
         }
@@ -25,7 +29,7 @@ export default function ({ game, toggleFavourite, playGame, removeGame }: IProps
       />
 
       <CardActions disableSpacing>
-        <IconButton onClick={removeGame} style={{ color: "red" }}>
+        <IconButton onClick={removeGame} style={{ color: "red" }} aria-label="deleteGame">
           <Delete />
         </IconButton>
         <span style={{ flexGrow: 1 }}></span>

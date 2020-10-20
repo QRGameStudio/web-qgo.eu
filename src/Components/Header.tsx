@@ -17,7 +17,7 @@ export default function ({ offline, setRightDrawerOpen }: IProps) {
             <WifiOff />
           </IconButton>
         )}
-        <IconButton edge="end" color="inherit" onClick={() => setRightDrawerOpen(true)}>
+        <IconButton edge="end" color="inherit" onClick={() => setRightDrawerOpen(true)} aria-label="show menu">
           <Menu />
         </IconButton>
       </Toolbar>
