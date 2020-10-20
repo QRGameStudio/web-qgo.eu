@@ -10,30 +10,29 @@ export default class Decompressor {
     this.compressedText = compressedText;
   }
 
-  private base64 = () => {
+  private base64 = (onFinnish: (res: string) => void) => {
     const compressed = Uint8Array.from(atob(this.compressedText), (c) => c.charCodeAt(0));
-    return this.lzma(compressed);
+    this.lzma(compressed, onFinnish);
   };
 
-  private base32 = () => {
+  private base32 = (onFinnish: (res: string) => void) => {
     // @ts-ignore
     const compressed = Uint8Array.from(base32.decode(this.compressedText.toLowerCase()), (c) => c.charCodeAt(0));
-    return this.lzma(compressed);
+    this.lzma(compressed, onFinnish);
   };
 
-  private lzma = (compressed: Uint8Array) => {
-    return LZMA.decompress(compressed);
+  private lzma = (compressed: Uint8Array, onFinnish: (res: string) => void) => {
+    LZMA.decompress(compressed, onFinnish);
   };
 
   decompress = () =>
     new Promise<string>(async (resolve) => {
-      let res = "";
+      const onFinnish = (res: string) => resolve(new CodeMap(res).revert() as string);
       if (this.compressedText.startsWith("CB")) {
         this.compressedText = this.compressedText.substring(2);
-        res = this.base32();
+        this.base32(onFinnish);
       } else {
-        res = this.base64();
+        this.base64(onFinnish);
       }
-      resolve(new CodeMap(res).revert() as string);
     });
 }
