@@ -28,7 +28,6 @@ export default function () {
   const [code, setCode] = useState<string | undefined>(undefined);
   const { compressedCode } = useParams<{ compressedCode: string }>();
   const decodedCompressedCode = decodeURI(compressedCode);
-  console.log("start");
   useEffect(() => {
     new Decompressor(decodedCompressedCode).decompress().then((gameCode) => {
       buildCode(gameCode).then(setCode);
@@ -39,7 +38,6 @@ export default function () {
   if (code !== undefined && gameInfo !== undefined) {
     new Collection(CollectionKey).add(gameInfo.name, gameInfo.version, decodedCompressedCode);
   }
-  console.log("end");
   return (
     <>
       {code === undefined ? (

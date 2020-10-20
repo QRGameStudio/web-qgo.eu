@@ -162,7 +162,7 @@ export default function RightDrawer(props: IProps) {
           </Grid>
         </ListItem>
       </List>
-      <div className="mx-auto" style={{ cursor: "pointer" }} onClick={() => window.open("http://qrgamestudio.com/", "blank")}>
+      <div className="mx-auto" style={{ cursor: "pointer" }} onClick={() => window.open("https://qrgamestudio.com/", "blank")}>
         <img src="/img/qrLogo.png" style={{ width: "100px", marginLeft: "70px" }} className="mt-3" alt="qrLogo" />
         <br />
         <br />
