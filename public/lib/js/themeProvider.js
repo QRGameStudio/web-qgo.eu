@@ -13,4 +13,4 @@ function GTheme() {
   };
 }
 
-new GTheme().apply();
+$(document).ready(() => new GTheme().apply())

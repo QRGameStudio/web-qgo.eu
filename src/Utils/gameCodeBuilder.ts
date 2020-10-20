@@ -3,7 +3,7 @@ const libs = {
   css: ["bootstrap.min.css", "themeProvider.css"],
 };
 
-export function buildCode(code: string) {
+export async function buildCode(code: string) {
   return `${libs.js.map((f) => `<script src="../lib/js/${f}"></script>`).reduce((a, b) => a + b, "")}${libs.css
     .map((f) => `<link rel="stylesheet" href="../lib/css/${f}">`)
     .reduce((a, b) => a + b, "")}${code}`;

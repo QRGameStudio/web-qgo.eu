@@ -5,7 +5,7 @@ import Scanner from "../Components/Scanner";
 import { useHistory } from "react-router-dom";
 
 const validateScan = (data: string) => true;
-const preprocessScan = (data: string) => data.split("#").reverse()[0];
+const preprocessScan = (data: string) => data.replace("https://QGO.EU/GAME/", "");
 
 export default function () {
   const [scann, setScann] = useState(false);

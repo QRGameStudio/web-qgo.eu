@@ -25,15 +25,15 @@ export default class Decompressor {
     return LZMA.decompress(compressed);
   };
 
-  decompress = () => {
-    let res = "";
-    if (this.compressedText.startsWith("CB")) {
-      this.compressedText = this.compressedText.substring(2);
-      res = this.base32();
-    } else {
-      res = this.base64();
-    }
-    console.log(res);
-    return new CodeMap(res).revert() as string;
-  };
+  decompress = () =>
+    new Promise<string>(async (resolve) => {
+      let res = "";
+      if (this.compressedText.startsWith("CB")) {
+        this.compressedText = this.compressedText.substring(2);
+        res = this.base32();
+      } else {
+        res = this.base64();
+      }
+      resolve(new CodeMap(res).revert() as string);
+    });
 }
