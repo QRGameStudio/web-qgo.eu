@@ -21,7 +21,14 @@ function App() {
             <Route
               exact
               path="/Game/:compressedCode"
-              render={({ match }: MatchProps) => <Game compressedCode={decodeURI(match.params.compressedCode)} />}
+              render={({ match }: MatchProps) => (
+                <Game compressedCode={decodeURI(match.params.compressedCode).replace("#", "")} />
+              )}
+            />
+            <Route
+              exact
+              path="/Game/"
+              render={({ location }: MatchProps) => <Game compressedCode={location.hash.substring(1)} />}
             />
           </Switch>
         </Layout>

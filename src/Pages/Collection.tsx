@@ -11,15 +11,18 @@ export default function () {
 
   const collection = new Collection(CollectionKey);
 
+  const setGamesOrdered = (games: storedGame[]) => {
+    setGames(
+      games.sort((a, b) => {
+        if (a.isFavourite && !b.isFavourite) return -1;
+        if (b.isFavourite && !a.isFavourite) return 1;
+        return a.name < b.name ? -1 : a.name === b.name ? 0 : 1;
+      })
+    );
+  };
+
   useEffect(
-    () =>
-      setGames(
-        collection.getAll().sort((a, b) => {
-          if (a.isFavourite && !b.isFavourite) return -1;
-          if (b.isFavourite && !a.isFavourite) return 1;
-          return a.name < b.name ? -1 : a.name === b.name ? 0 : 1;
-        })
-      ),
+    () => setGamesOrdered(collection.getAll()),
     // eslint-disable-next-line
     []
   );
@@ -32,12 +35,12 @@ export default function () {
             game={g}
             toggleFavourite={() => {
               collection.toggleFavourite(g.name);
-              setGames(collection.getAll());
+              setGamesOrdered(collection.getAll());
             }}
-            playGame={() => history.push("/Game/" + g.code)}
+            playGame={() => history.push("/Game/#" + g.code)}
             removeGame={() => {
               collection.remove(g.name);
-              setGames(collection.getAll());
+              setGamesOrdered(collection.getAll());
             }}
           />
         </Grid>

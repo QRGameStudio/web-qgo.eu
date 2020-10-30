@@ -39,6 +39,8 @@ export default function ({ compressedCode }: { compressedCode: string }) {
   const [gameInfo, setGameInfo] = useState<{ version: string; name: string; id: string } | undefined>(undefined);
   const [code, setCode] = useState<string | undefined>(undefined);
 
+  console.log(compressedCode);
+
   useEffect(() => {
     new Decompressor(compressedCode).decompress().then((gameCode) => {
       buildCode(gameCode).then((code) => {

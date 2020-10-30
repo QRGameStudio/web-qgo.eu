@@ -13,7 +13,7 @@ interface IProps {
 
 export default function ({ game, toggleFavourite, playGame, removeGame }: IProps) {
   return (
-    <Card style={{ margin: "16px" }}>
+    <Card style={{ margin: "16px", height: "calc(100% - 32px)" }}>
       <CardHeader
         action={
           <IconButton
