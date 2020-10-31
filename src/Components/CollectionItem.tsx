@@ -13,12 +13,12 @@ interface IProps {
 
 export default function ({ game, toggleFavourite, playGame, removeGame }: IProps) {
   return (
-    <Card style={{ margin: "16px", height: "calc(100% - 32px)" }}>
+    <Card style={{ margin: "16px", height: "calc(100% - 32px)", display: "flex", flexDirection: "column" }}>
       <CardHeader
         action={
           <IconButton
             onClick={toggleFavourite}
-            style={{ color: game.isFavourite ? "pink" : "inherit" }}
+            style={{ color: game.isFavourite ? "pink" : "inherit", position: "absolute", right: 8, top: 8 }}
             aria-label="makeFavourite"
           >
             {game.isFavourite ? <Favorite /> : <FavoriteBorder />}
@@ -26,6 +26,7 @@ export default function ({ game, toggleFavourite, playGame, removeGame }: IProps
         }
         title={game.name.toUpperCase()}
         subheader={`${T.Version} ${game.version}`}
+        style={{ flexGrow: 1, position: "relative", paddingRight: 48 }}
       />
 
       <CardActions disableSpacing>
