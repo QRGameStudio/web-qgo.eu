@@ -7,4 +7,11 @@ export const de = {
   Play: "Spielen",
   Version: "Version",
   Collection: "Meine Sammlung",
+  CheckForUpdates: "Auf Updates prüfen",
+  AvailableUpdates: "Verfügbare Updates",
+  checkUpdatesError: "Fehler währen Updatesprüfung. Testen Sie bitte Ihre Internetverbindung oder versuchen es wieder später.",
+  upToDate: "Alle Spiele sind auf der neueste Version",
+  close: "Schliesen",
+  gameUpdated: "Das Spiel war aktualisiert",
+  gameUpdateError: "Es gab ein Fehler während die Aktualisation",
 };

@@ -1,4 +1,6 @@
 export type storedGame = {
+  id: string;
+  secret?: string;
   name: string;
   code: string;
   version: string;
@@ -22,7 +24,22 @@ export default class Collection {
   }
 
   private shouldUpdate = (newVersion: string, actual: string | undefined) => {
-    return true;
+    if (actual === undefined) return true;
+    try {
+      const newVersionSplit = newVersion.split(".");
+      const actVersionSplit = actual.split(".");
+      for (let i = 0; i < Math.max(newVersionSplit.length, actVersionSplit.length); i++) {
+        if (i >= newVersionSplit.length) return false;
+        if (i >= actVersionSplit.length) return true;
+        const newAct = parseInt(newVersionSplit[i]);
+        const oldAct = parseInt(actVersionSplit[i]);
+        if (newAct > oldAct) return true;
+        if (newAct < oldAct) return false;
+      }
+    } catch {
+      return false;
+    }
+    return false;
   };
 
   private loadGames = () => {
@@ -33,33 +50,38 @@ export default class Collection {
     localStorage.setItem(this.key, JSON.stringify(this.games));
   };
 
-  add = (name: string, version: string, compressedCode: string) => {
-    const lastVersion = this.get(name)?.version;
+  add = (name: string, id: string, secret: string, version: string, compressedCode: string) => {
+    const lastVersion = this.get(id)?.version;
     if (this.shouldUpdate(version, lastVersion)) {
       if (lastVersion !== undefined) {
         this.games = this.games.filter((g) => g.name !== name);
       }
-      this.games.push({ code: compressedCode, isFavourite: false, name: name, version: version });
+      this.games.push({ code: compressedCode, isFavourite: false, name: name, version: version, id: id, secret: secret });
       this.storeGames();
       return lastVersion === undefined ? updateStatus.CREATED : updateStatus.UPDATED;
     }
     return updateStatus.NONE;
   };
 
-  remove = (name: string) => {
-    this.games = this.games.filter((g) => g.name !== name);
+  addObject = (game: storedGame) => {
+    this.games.push(game);
     this.storeGames();
   };
 
-  get = (name: string) => {
-    const filtered = this.games.filter((g) => g.name === name);
+  remove = (id: string) => {
+    this.games = this.games.filter((g) => g.id !== id);
+    this.storeGames();
+  };
+
+  get = (id: string) => {
+    const filtered = this.games.filter((g) => g.id === id);
     return filtered.length > 0 ? filtered[0] : null;
   };
 
   getAll = () => [...this.games];
 
-  toggleFavourite = (name: string) => {
-    const filtered = this.games.filter((g) => g.name === name);
+  toggleFavourite = (id: string) => {
+    const filtered = this.games.filter((g) => g.id === id);
     if (filtered.length > 0) filtered[0].isFavourite = !filtered[0].isFavourite;
     this.storeGames();
   };

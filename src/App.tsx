@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, BrowserRouter, RouteComponentProps } from "react-router-dom";
-import Layout from "./Components/Layout";
+import { LayoutProvider } from "./Layout/LayoutContext";
 import Collection from "./Pages/Collection";
 import Game from "./Pages/Game";
 import Home from "./Pages/Home";
@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Layout>
+        <LayoutProvider>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/Collection" component={Collection} />
@@ -31,7 +31,7 @@ function App() {
               render={({ location }: MatchProps) => <Game compressedCode={location.hash.substring(1)} />}
             />
           </Switch>
-        </Layout>
+        </LayoutProvider>
       </BrowserRouter>
     </>
   );

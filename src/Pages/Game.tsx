@@ -30,8 +30,9 @@ const parseGameInfo = async (code: string) => {
   const metas = [].slice.call(doc.getElementsByTagName("meta")) as HTMLMetaElement[];
   const version = metas.filter((m) => m.name === "gv")[0].content;
   const id = metas.filter((m) => m.name === "gi")[0].content;
+  const secret = (metas.filter((m) => m.name === "gs")[0] || {}).content;
   const name = doc.getElementsByTagName("title")[0].innerHTML;
-  return { version, name, id };
+  return { version, name, id, secret };
 };
 
 export default function ({ compressedCode }: { compressedCode: string }) {
@@ -43,7 +44,7 @@ export default function ({ compressedCode }: { compressedCode: string }) {
     new Decompressor(compressedCode).decompress().then((gameCode) => {
       buildCode(gameCode).then((code) => {
         parseGameInfo(gameCode).then((info) => {
-          new Collection(CollectionKey).add(info.name, info.version, compressedCode);
+          new Collection(CollectionKey).add(info.name, info.id, info.secret, info.version, compressedCode);
           setGameInfo(info);
         });
         setCode(code);

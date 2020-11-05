@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import CollectionItem from "../Components/CollectionItem";
 import Collection, { storedGame } from "../Utils/collectionAPI";
 import { CollectionKey } from "../Utils/constants";
+import CheckUpdatesModal from "../Components/CheckUpdatesModal";
 
 export default function () {
   const history = useHistory();
@@ -28,23 +29,27 @@ export default function () {
   );
 
   return (
-    <Grid container>
-      {games.map((g) => (
-        <Grid item key={g.name} xs={6} sm={4} md={3} lg={2}>
-          <CollectionItem
-            game={g}
-            toggleFavourite={() => {
-              collection.toggleFavourite(g.name);
-              setGamesOrdered(collection.getAll());
-            }}
-            playGame={() => history.push("/Game/#" + g.code)}
-            removeGame={() => {
-              collection.remove(g.name);
-              setGamesOrdered(collection.getAll());
-            }}
-          />
-        </Grid>
-      ))}
-    </Grid>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 56px)" }}>
+      <Grid container>
+        {games.map((g) => (
+          <Grid item key={g.name} xs={6} sm={4} md={3} lg={2}>
+            <CollectionItem
+              game={g}
+              toggleFavourite={() => {
+                collection.toggleFavourite(g.id);
+                setGamesOrdered(collection.getAll());
+              }}
+              playGame={() => history.push("/Game/#" + g.code)}
+              removeGame={() => {
+                collection.remove(g.id);
+                setGamesOrdered(collection.getAll());
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
+      <div style={{ flexGrow: 1 }}>&nbsp;</div>
+      <CheckUpdatesModal onUpdate={() => setGamesOrdered(collection.getAll())} collection={collection} />
+    </div>
   );
 }

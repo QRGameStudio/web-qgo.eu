@@ -8,4 +8,11 @@ export const en = {
   Version: "Version",
   Collection: "My collection",
   DevelopedBy: "Created by",
+  CheckForUpdates: "Check for updates",
+  AvailableUpdates: "Available updates",
+  checkUpdatesError: "Error while checking updates. Please check your internet connection or try again later.",
+  upToDate: "All games are up to date",
+  close: "Close",
+  gameUpdated: "The game was updated",
+  gameUpdateError: "There was an error during the update",
 };
