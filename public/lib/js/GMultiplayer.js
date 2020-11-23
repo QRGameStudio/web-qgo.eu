@@ -1,12 +1,8 @@
 function GMP() {
     const storage = new GStorage("multiplayer");
-    const modals = new ModalService();
-    let currentGameId = null;
-    if (typeof GamesStorage !== 'undefined') {
-        const gameStorage = new GamesStorage();
-        const gameData = gameStorage.parseGameData();
-        currentGameId = gameData.id;
-    }
+    const modals = new GModal();
+    const gameData = new GGameData().parseGameData();
+    let currentGameId = gameData.id;
 
     let myPeer = null;
     let myName = null;
@@ -38,8 +34,7 @@ function GMP() {
         }
 
         const options = {
-            // host: `peer.${window.location.host}`,
-            host: 'peer.qrpr.eu', // TODO remove fixed server
+            host: `peer.${isLocalhost?'qrpr.eu':window.location.host}`,
             key: 'qrgames',
             secure: true
         }
@@ -161,7 +156,7 @@ function GFriends() {
             allowDelete: false,
             allowSelect: false
         }, options);
-        const modals = new ModalService();
+        const modals = new GModal();
         const superThis = this;
         return new Promise(resolve => {
             async function inner() {

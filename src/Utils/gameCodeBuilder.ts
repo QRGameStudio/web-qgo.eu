@@ -3,13 +3,16 @@ const libs = {
     "jquery.min.js",
     "peer.js",
     "bootstrap.min.js",
-    "GStorage.js",
-    "musicComposer.js",
-    "themeProvider.js",
-    "modals.js",
+    "renderer.js",
+    "GGameData.js",
+    "GModal.js",
     "GMultiplayer.js",
+    "GPopup.js",
+    "GSound.js",
+    "GStorage.js",
+    "GTheme.js",
   ],
-  css: ["bootstrap.min.css", "themeProvider.css"],
+  css: ["bootstrap.min.css", "GTheme.css"],
 };
 
 export async function buildCode(code: string) {
