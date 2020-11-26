@@ -2,7 +2,7 @@ function GMP() {
     const storage = new GStorage("multiplayer");
     const modals = new GModal();
     const gameData = new GGameData().parseGameData();
-    let currentGameId = gameData.id;
+    let currentGameId = gameData ? gameData.id : null;
 
     let myPeer = null;
     let myName = null;
@@ -34,7 +34,7 @@ function GMP() {
         }
 
         const options = {
-            host: `peer.${isLocalhost?'qrpr.eu':window.location.host}`,
+            host: `peer.qrpr.eu`,
             key: 'qrgames',
             secure: true
         }
