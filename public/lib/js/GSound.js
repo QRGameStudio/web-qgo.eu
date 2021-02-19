@@ -1,5 +1,5 @@
 function GVolume() {
-    this.instance = this;
+    GVolume.prototype.instance = this;
     const elId = 'g-volume-control';
     const el = document.getElementById(elId) || document.createElement('div');
     el.id = elId;
@@ -10,7 +10,17 @@ function GVolume() {
     el.style.fontSize = '30px';
     el.style.opacity = '0.2';
     el.onclick = () => this.mute(!this.muted);
-    document.body.appendChild(el);
+
+    // Append el after document.body is ready
+    setTimeout(() => {
+        const appendEl = () => document.body.appendChild(el);
+
+        try {
+            appendEl();
+        } catch (_) {
+            setTimeout(() => appendEl(), 30);
+        }
+    })
 
     const storage = new GStorage("volume");
 
@@ -21,7 +31,10 @@ function GVolume() {
     this.volume = 100;
     storage.get('volume', 100).then((val) => this.setVolume(val));
 
-    this.mute = (val) => {
+    this.musicEnabled = false;
+    storage.get('musicEnabled', false).then((val) => this.musicEnabled = val);
+
+    this.mute = async (val) => {
         if (val) {
             el.textContent = '🔇';
             this.muted = true;
@@ -31,16 +44,21 @@ function GVolume() {
             this.muted = false;
             this.volume = volume;
         }
-        storage.set('muted', val);
+        await storage.set('muted', val);
     }
 
-    this.setVolume = (val) => {
+    this.setVolume = async (val) => {
         volume = val;
         if (!this.muted) {
             this.volume = val;
         }
-        storage.set('volume', val);
+        await storage.set('volume', val);
     };
+
+    this.setMusicEnabled = async (enabled) => {
+        this.musicEnabled = enabled;
+        await storage.set('musicEnabled', enabled);
+    }
 
     this.show = (val = true) => {
         if (val) {
@@ -63,7 +81,6 @@ function GTone(tone, duration = 200, volume = null) {
     const volumeControl = GVolume.prototype.create();
 
     this.play = () => {
-        volumeControl.show();
         const oscillator = this.audioCtx.createOscillator();
         const gainNode = this.audioCtx.createGain();
 
@@ -72,21 +89,26 @@ function GTone(tone, duration = 200, volume = null) {
 
         volume = volume === null ? volumeControl.volume : volume;
 
-        gainNode.gain.value = volume / 100;
-        oscillator.frequency.value = frequency;
-        oscillator.type = 'triangle';
-
-        oscillator.start();
+        if (volume > 0.1) {
+            gainNode.gain.value = volume / 100;
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'triangle';
+            oscillator.start();
+        }
 
         return new Promise((resolve) => {
             setTimeout(() => {
-                oscillator.stop();
+                if (volume > 0.1) {
+                    oscillator.stop();
+                }
                 resolve();
             }, duration);
         });
     };
 
-    this.setVolume = (val) => volume = val;
+    this.setVolume = (val) => {
+        volume = val;
+    }
 }
 
 GTone.prototype.audioCtx = new window.AudioContext();
@@ -124,10 +146,11 @@ function GSong(tones, tonesPerSecond = 3, pausePercentage = 0.2) {
     };
 }
 
-function GTonesSequence(seq) {
+function GTonesSequence(seq, isMusic = false) {
     let tonesGroups = [];
     let stopped = false;
-    let volume = null;
+    // disable volume if this is music and the music is not enabled
+    let volume = isMusic && !GVolume.prototype.create().musicEnabled ? 0 : null;
 
     seq.forEach((x) => tonesGroups.push(x[0].map((t) => new GTone(t, x[1]))));
 
@@ -144,7 +167,7 @@ function GTonesSequence(seq) {
                 }
             }
             repeatCount -= 1;
-        } while (repeatCount !== -1);
+        } while (!stopped && repeatCount !== -1);
     };
 
     this.setVolume = (val) => volume = val;
@@ -297,13 +320,16 @@ function GSongLib() {
             return null;
         }
 
-        return new GTonesSequence(this.cache[name]);
+        const isSong = name.toLowerCase().startsWith('song');
+        return new GTonesSequence(this.cache[name], isSong);
     }
 
     this.play = async (name, repeatCount=0, volume=null) => {
         const seq = await this.get(name);
         if (seq) {
-            seq.setVolume(volume);
+            if (volume !== null) {
+                seq.setVolume(volume);
+            }
             await seq.play(repeatCount);
             return true;
         }
@@ -311,3 +337,5 @@ function GSongLib() {
         return null;
     }
 }
+
+new GTone(''); // initialize tones

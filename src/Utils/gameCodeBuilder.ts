@@ -11,6 +11,7 @@ const libs = {
     "GSound.js",
     "GStorage.js",
     "GTheme.js",
+    "GUt.js",
   ],
   css: ["bootstrap.min.css", "GTheme.css"],
 };
