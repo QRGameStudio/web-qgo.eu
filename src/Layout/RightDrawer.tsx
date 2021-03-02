@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import {
   SwipeableDrawer,
   List,
@@ -58,10 +58,15 @@ export default function RightDrawer(props: IProps) {
 
   const changeSoundProfile = (newProfile: string) => {
     localStorage.setItem("sound/status", newProfile);
+    sessionStorage.setItem("sound/status", newProfile);
     setSoundProfile(newProfile);
   };
 
   const history = useHistory();
+
+  useEffect(() => {
+    sessionStorage.setItem("sound/status", soundProfile);
+  });
 
   const colors = [
     "#ff1744",
