@@ -58,14 +58,14 @@ export default function RightDrawer(props: IProps) {
 
   const changeSoundProfile = (newProfile: string) => {
     localStorage.setItem("sound/status", newProfile);
-    sessionStorage.setItem("sound/status", newProfile);
+    sessionStorage.setItem("_soundStatus", newProfile);
     setSoundProfile(newProfile);
   };
 
   const history = useHistory();
 
   useEffect(() => {
-    sessionStorage.setItem("sound/status", soundProfile);
+    sessionStorage.setItem("_soundStatus", soundProfile);
   });
 
   const colors = [
