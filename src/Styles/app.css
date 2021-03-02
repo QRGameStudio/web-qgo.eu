@@ -1,4 +1,9 @@
 html,
+body {
+  overscroll-behavior-y: contain;
+}
+
+html,
 body,
 #root {
   padding: 0;

@@ -15,4 +15,8 @@ export const en = {
   close: "Close",
   gameUpdated: "The game was updated",
   gameUpdateError: "There was an error during the update",
+  soundProfile: "Sound profile",
+  silent: "Silent",
+  effectsOnly: "Only Effects",
+  effectsMusic: "Effects + Music",
 };

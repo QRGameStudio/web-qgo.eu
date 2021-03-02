@@ -14,4 +14,8 @@ export const de = {
   close: "Schliesen",
   gameUpdated: "Das Spiel war aktualisiert",
   gameUpdateError: "Es gab ein Fehler während die Aktualisation",
+  soundProfile: "Klangprofil",
+  silent: "Leise",
+  effectsOnly: "Nur Effekte",
+  effectsMusic: "Effekte + Musik",
 };

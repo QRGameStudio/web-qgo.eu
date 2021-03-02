@@ -12,7 +12,7 @@ import {
   Dialog,
   DialogTitle,
 } from "@material-ui/core";
-import { Translate, Brightness4, Cached, LibraryBooks, CropFree } from "@material-ui/icons";
+import { Translate, Brightness4, Cached, LibraryBooks, CropFree, VolumeUp, VolumeOff, MusicNote } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import T from "../Utils/translate/translator";
@@ -37,9 +37,30 @@ const useStyles = makeStyles({
   },
 });
 
+const soundProfiles = {
+  "1": T.effectsOnly,
+  "2": T.effectsMusic,
+  "0": T.silent,
+} as { [index: string]: string };
+
+const soundIcons = {
+  "1": <VolumeUp />,
+  "2": <MusicNote />,
+  "0": <VolumeOff />,
+} as { [index: string]: JSX.Element };
+
 export default function RightDrawer(props: IProps) {
   const classes = useStyles();
-  const [nestedListOpen, setNestedListOpen] = useState(false);
+  const [languageSelectOpen, setLanguageSelectOpen] = useState(false);
+  const [soundSelectOpen, setSoundSelectOpen] = useState(false);
+
+  const [soundProfile, setSoundProfile] = useState(localStorage.getItem("sound/status") || "1");
+
+  const changeSoundProfile = (newProfile: string) => {
+    localStorage.setItem("sound/status", newProfile);
+    setSoundProfile(newProfile);
+  };
+
   const history = useHistory();
 
   const colors = [
@@ -94,13 +115,47 @@ export default function RightDrawer(props: IProps) {
       <hr style={{ width: "95%" }} />
       <br />
 
-      <ListItem button onClick={() => setNestedListOpen(true)} className="py-0">
+      <ListItem button onClick={() => setSoundSelectOpen(true)} className="py-0">
+        <ListItemIcon>{soundIcons[soundProfile]}</ListItemIcon>
+        <ListItemText primary={T.soundProfile} secondary={soundProfiles[soundProfile]} />
+      </ListItem>
+      <Dialog maxWidth="lg" onClose={() => setSoundSelectOpen(false)} open={soundSelectOpen}>
+        <DialogTitle>{T.soundProfile}</DialogTitle>
+        <List className={classes.languageDialog} component="div" disablePadding>
+          <ListItem
+            button
+            onClick={() => {
+              changeSoundProfile("1");
+            }}
+          >
+            <ListItemText primary={T.effectsOnly} />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              changeSoundProfile("0");
+            }}
+          >
+            <ListItemText primary={T.silent} />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              changeSoundProfile("2");
+            }}
+          >
+            <ListItemText primary={T.effectsMusic} />
+          </ListItem>
+        </List>
+      </Dialog>
+
+      <ListItem button onClick={() => setLanguageSelectOpen(true)} className="py-0">
         <ListItemIcon>
           <Translate />
         </ListItemIcon>
         <ListItemText primary={T.Language} secondary={T._Language} />
       </ListItem>
-      <Dialog maxWidth="lg" onClose={() => setNestedListOpen(false)} open={nestedListOpen}>
+      <Dialog maxWidth="lg" onClose={() => setLanguageSelectOpen(false)} open={languageSelectOpen}>
         <DialogTitle>{T.Language}</DialogTitle>
         <List className={classes.languageDialog} component="div" disablePadding>
           <ListItem
@@ -129,6 +184,7 @@ export default function RightDrawer(props: IProps) {
           </ListItem>
         </List>
       </Dialog>
+
       <ListItem button onClick={() => serviceWorkerUnregistration()}>
         <ListItemIcon>
           <Cached />

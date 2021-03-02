@@ -15,4 +15,8 @@ export const cs = {
   close: "Zavřít",
   gameUpdated: "Hra byla aktualizována",
   gameUpdateError: "Během aktualizace došlo k chybě",
+  soundProfile: "Zvukový profil",
+  silent: "Tichý",
+  effectsOnly: "Pouze efeky",
+  effectsMusic: "Efekty + Hudba",
 };
