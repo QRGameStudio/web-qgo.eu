@@ -53,6 +53,7 @@ export default function RightDrawer(props: IProps) {
   const classes = useStyles();
   const [languageSelectOpen, setLanguageSelectOpen] = useState(false);
   const [soundSelectOpen, setSoundSelectOpen] = useState(false);
+  const [libsVersion, setLibsVersion] = useState("");
 
   const [soundProfile, setSoundProfile] = useState(localStorage.getItem("sound/status") || "1");
 
@@ -66,6 +67,12 @@ export default function RightDrawer(props: IProps) {
 
   useEffect(() => {
     sessionStorage.setItem("_soundStatus", soundProfile);
+    fetch("/lib/libsInfo.json")
+      .then((res) => res.json())
+      .then((data) => setLibsVersion(data.version))
+      .catch(function (err) {
+        console.log(err, " error");
+      });
   });
 
   const colors = [
@@ -231,6 +238,8 @@ export default function RightDrawer(props: IProps) {
           {T.DevelopedBy} QR Games Studio
           <br />
           {T.Version}: {packageJson.version}
+          <br />
+          {T.LibrariesVersion}: {libsVersion}
           <br />
           <br />
         </Typography>

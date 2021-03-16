@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+cd "$(dirname "$0")"
+
+
+cd public/lib
+
+rm css/libs.css 2> /dev/null
+rm js/libs.min.js 2> /dev/null
+
+rm *.html *.json 2> /dev/null

@@ -6,6 +6,7 @@ export const cs = {
   ScanAndPlay: "Naskenuj a hraj",
   Play: "Hrát",
   Version: "Verze",
+  LibrariesVersion: "Verze knihoven",
   Collection: "Moje kolekce",
   CheckForUpdates: "Zkontroluj aktualzace",
   AvailableUpdates: "Dostupné aktualizace",

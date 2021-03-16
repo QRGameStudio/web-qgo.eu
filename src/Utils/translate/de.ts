@@ -6,6 +6,7 @@ export const de = {
   ScanAndPlay: "Scannen und spielen",
   Play: "Spielen",
   Version: "Version",
+  LibrariesVersion: "Bibiothek Version",
   Collection: "Meine Sammlung",
   CheckForUpdates: "Auf Updates prüfen",
   AvailableUpdates: "Verfügbare Updates",

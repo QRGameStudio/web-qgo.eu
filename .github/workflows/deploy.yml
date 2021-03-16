@@ -21,6 +21,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Packages
         run: npm install
+      - name: Fetch Libraries
+        run: npm run-script fetch-libs
       - name: Build page
         run: npm run build
       - name: Clear old version

@@ -1,19 +1,6 @@
 const libs = {
-  js: [
-    "jquery.min.js",
-    "bootstrap.min.js",
-    "renderer.js",
-    "peer.js",
-    "GStorage.js",
-    "GModal.js",
-    "GPopup.js",
-    "GSound.js",
-    "GTheme.js",
-    "GMultiplayer.js",
-    "GGameData.js",
-    "GUt.js",
-  ],
-  css: ["bootstrap.min.css", "GTheme.css"],
+  js: ["jquery.min.js", "bootstrap.min.js", "renderer.js", "peer.js", "libs.min.js"],
+  css: ["bootstrap.min.css", "libs.css"],
 };
 
 export async function buildCode(code: string) {

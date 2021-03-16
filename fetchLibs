@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+cd "$(dirname "$0")"
+./clearLibs
+wget ftp://176.102.64.23/public/libs/* -P public/lib
+mv public/lib/libs.min.js public/lib/js/libs.min.js
+mv public/lib/libs.css public/lib/css/libs.css
+rm public/lib/libs.min-min.js

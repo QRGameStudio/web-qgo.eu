@@ -6,6 +6,7 @@ export const en = {
   ScanAndPlay: "Scan & play",
   Play: "play",
   Version: "Version",
+  LibrariesVersion: "Libraries version",
   Collection: "My collection",
   DevelopedBy: "Created by",
   CheckForUpdates: "Check for updates",
